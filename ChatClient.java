@@ -9,6 +9,12 @@ public class ChatClient
 {
     public static void main(String[] args)
     {
+        if (args.length < 4)
+        {
+            System.out.println("Usage: java ChatClient <server-ip> <port> <username> <message>");
+            return;
+        }
+
         String sServerAddress = args[0];
         int nPort = Integer.parseInt(args[1]);
         String userName = args[2];

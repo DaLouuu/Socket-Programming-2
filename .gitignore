@@ -1,0 +1,20 @@
+# Compiled Java class files
+*.class
+
+# Log and temporary test files
+*.log
+*.err
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# VS Code
+.vscode/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.DS_Store

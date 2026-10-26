@@ -9,11 +9,17 @@ public class ChatServer
 {
     public static void main(String[] args)
     {
+        if (args.length < 1)
+        {
+            System.out.println("Usage: java ChatServer <port>");
+            return;
+        }
+
         int nPort = Integer.parseInt(args[0]);
         System.out.println("Server: Listening on port " + args[0] + "...");
-        ServerSocket serverSocket;
-        Socket serverEndpointA;
-        Socket serverEndpointB;
+        ServerSocket serverSocket = null;
+        Socket serverEndpointA = null;
+        Socket serverEndpointB = null;
 
         try 
         {
