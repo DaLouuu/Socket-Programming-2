@@ -23,14 +23,14 @@ A Java TCP socket programming implementation created for **CSNETWK (Computer Net
 
 In traditional peer-to-peer communication, network address translation (NAT) and firewall traversal can complicate direct connections between two endpoints. This project demonstrates a **mediated two-client message exchange** pattern:
 
-1. **`ChatServer`**:
+1. **`ChatServer`** ([src/ChatServer.java](file:///c:/Users/asus/OneDrive/Desktop/Socket-Programming-2/src/ChatServer.java)):
    - Listens on a designated TCP port.
    - Waits for and accepts incoming connections from **Client A** and **Client B** in sequence.
    - Reads a serialized string payload (`writeUTF` / `readUTF`) from each client.
    - Relays **Client B's message to Client A** and **Client A's message to Client B**.
    - Closes connections and terminates cleanly.
 
-2. **`ChatClient`**:
+2. **`ChatClient`** ([src/ChatClient.java](file:///c:/Users/asus/OneDrive/Desktop/Socket-Programming-2/src/ChatClient.java)):
    - Connects to the server given an IP address/hostname and port number.
    - Transmits a message tagged with the user's name: `"Message from <username>: <message>"`.
    - Blocks awaiting the swapped response from the other client relayed by the server.
@@ -70,6 +70,30 @@ sequenceDiagram
 
 ---
 
+## 🗂️ Project Directory Structure
+
+```text
+SocketRelay-CSNETWK/
+│
+├── .gitignore                          # Git ignore rules for compiled classes & IDE cache
+├── README.md                           # Comprehensive project documentation
+│
+├── docs/                               # Assessment deliverables and documentation
+│   └── CSNETWK_Lab04_GuillarteSo.png   # Verified execution screenshot
+│
+├── src/                                # Java source files
+│   ├── ChatServer.java                 # TCP Socket Relay Server implementation
+│   └── ChatClient.java                 # TCP Socket Client implementation
+│
+├── bin/                                # Compiled .class bytecode (gitignored)
+│
+└── scripts/                            # Helper automation scripts
+    ├── run_server.bat                  # Builds and launches ChatServer on port 4000
+    └── run_clients.bat                 # Launches Client A and Client B sequentially
+```
+
+---
+
 ## 🖥️ Frontend Assessment
 
 - **Current Implementation:** Pure **Command-Line Interface (CLI)** / Console Application.
@@ -82,56 +106,43 @@ sequenceDiagram
 
 ---
 
-## 🗂️ Suggested Folder Hierarchy
-
-Currently, the project contains all source files in the root folder. For enhanced maintainability, modularity, and standards compliance, the following structured hierarchy is recommended:
-
-```text
-SocketRelay-CSNETWK/
-│
-├── .gitignore                      # Git ignore rules for Java binaries and IDE artifacts
-├── README.md                       # Comprehensive project documentation
-│
-├── docs/                           # Documentation and assessment deliverables
-│   └── CSNETWK_Lab04_GuillarteSo.png  # Execution output verification screenshot
-│
-├── src/                            # Java source code
-│   ├── ChatServer.java             # TCP Socket Relay Server implementation
-│   └── ChatClient.java             # TCP Socket Client implementation
-│
-├── bin/                            # Target directory for compiled .class binaries (gitignored)
-│
-└── scripts/                        # Optional automation helper scripts
-    ├── run_server.bat              # Batch script to launch ChatServer
-    └── run_clients.bat             # Batch script to launch both test clients
-```
-
----
-
 ## 🚀 How to Build and Run
 
 ### Prerequisites
-- **Java Development Kit (JDK 8 or later)** installed and available in your terminal path (`javac` and `java`).
+- **Java Development Kit (JDK 8 or later)** installed and available on your PATH (`javac` and `java`).
 
-### 1. Compile the Source Code
+### Option A: Using Helper Scripts (Windows)
+1. In a terminal, run the server script:
+   ```cmd
+   scripts\run_server.bat 4000
+   ```
+2. In another terminal, run the clients script:
+   ```cmd
+   scripts\run_clients.bat 4000
+   ```
+
+### Option B: Manual Terminal Execution
+
+#### 1. Compile the Source Code
+Compile the Java source files into the `bin/` directory:
 ```bash
-javac ChatServer.java ChatClient.java
+javac -d bin src/ChatServer.java src/ChatClient.java
 ```
 
-### 2. Start the Server
+#### 2. Start the Server
 Open a terminal and start the server with your desired port number (e.g., `4000`):
 ```bash
-java ChatServer 4000
+java -cp bin ChatServer 4000
 ```
 *Expected Server Output:*
 ```text
 Server: Listening on port 4000...
 ```
 
-### 3. Run Client A
+#### 3. Run Client A
 Open a second terminal window and run Client A:
 ```bash
-java ChatClient localhost 4000 "Alice" "Wait, it's all sockets?"
+java -cp bin ChatClient localhost 4000 "Alice" "Wait, it's all sockets?"
 ```
 *Expected Client A Output:*
 ```text
@@ -139,10 +150,10 @@ Client: Connected to server at localhost/127.0.0.1:4000
 ```
 *(Client A will pause while waiting for Client B to connect and reply).*
 
-### 4. Run Client B
+#### 4. Run Client B
 Open a third terminal window and run Client B:
 ```bash
-java ChatClient localhost 4000 "Bob" "Always has been."
+java -cp bin ChatClient localhost 4000 "Bob" "Always has been."
 ```
 
 ---
@@ -173,7 +184,7 @@ Client: Received -> Message from Alice: Wait, it's all sockets?
 Bob: Connection is terminated.
 ```
 
-A full verified execution screenshot can be viewed in [CSNETWK_Lab04_GuillarteSo.png](file:///c:/Users/asus/OneDrive/Desktop/Socket-Programming-2/CSNETWK_Lab04_GuillarteSo.png).
+A full verified execution screenshot can be viewed in [docs/CSNETWK_Lab04_GuillarteSo.png](file:///c:/Users/asus/OneDrive/Desktop/Socket-Programming-2/docs/CSNETWK_Lab04_GuillarteSo.png).
 
 ---
 
